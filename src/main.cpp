@@ -1,9 +1,14 @@
 
 #include <iostream>
 
+#include "App.hpp"
+
 int main() {
 
-    std::cout << "hi mom !" << std::endl;
+    App app = App();
+
+    app.init();
+    app.run();
 
     system("pause");
 
