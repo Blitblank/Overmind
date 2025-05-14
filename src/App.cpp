@@ -16,17 +16,20 @@ void App::run() {
     
     Network network(1, 1);
     
-    ReLu* relu = new ReLu();
-    Layer inputLayer(1, 100, relu);
-    Layer hiddenLayer(100, 100, relu);
-    Layer outputLayer(100, 1, relu);
+    Activation* activation = new Sigmoid();
+    Layer inputLayer(1, 100, activation);
+    Layer hiddenLayer(100, 100, activation);
+    Layer outputLayer(100, 1, activation);
 
     network.addLayer(&inputLayer);
     network.addLayer(&hiddenLayer);
     network.addLayer(&outputLayer);
+    //inputLayer.print();
+    //hiddenLayer.print();
+    //outputLayer.print();
 
     std::vector<double> inputs;
-    inputs.push_back(0.5);
+    inputs.push_back(0.2);
     std::vector<double> outputs = network.forwardPass(inputs);
 
     std::cout << "\nNetwork Input: " << std::endl;
