@@ -14,12 +14,16 @@ void App::init() {
 
 void App::run() {
     
-    Network network(1, 1);
+    int n_inputs = 2;
+    int n_outputs = 2;
+    int hiddenNeurons_1 = 100;
+    int hiddenNeurons_2 = 100;
+    Network network(n_inputs, n_outputs);
     
     Activation* activation = new Sigmoid();
-    Layer inputLayer(1, 100, activation);
-    Layer hiddenLayer(100, 100, activation);
-    Layer outputLayer(100, 1, activation);
+    Layer inputLayer(n_inputs, hiddenNeurons_1, activation);
+    Layer hiddenLayer(hiddenNeurons_1, hiddenNeurons_2, activation); //
+    Layer outputLayer(hiddenNeurons_2, n_outputs, activation);
 
     network.addLayer(&inputLayer);
     network.addLayer(&hiddenLayer);
@@ -29,7 +33,9 @@ void App::run() {
     //outputLayer.print();
 
     std::vector<double> inputs;
-    inputs.push_back(0.2);
+    for(int i = 0; i < n_inputs; i++) {
+        inputs.push_back(0.2);
+    }
     std::vector<double> outputs = network.forwardPass(inputs);
 
     std::cout << "\nNetwork Input: " << std::endl;
