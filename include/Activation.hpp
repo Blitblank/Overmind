@@ -14,16 +14,16 @@ class Activation {
 
 };
 
-class ReLu : Activation {
+class ReLu : public Activation {
     public:
-    double pass(double x);
+    double pass(double x) override;
 
     private:
 };
 
-class Sigmoid : Activation {
+class Sigmoid : public Activation {
     public:
-    double pass(double x);
+    double pass(double x) override;
 
     private:
 };

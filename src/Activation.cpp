@@ -4,7 +4,7 @@
 #include <iostream>
 
 Activation::Activation() {
-    std::cout << "Activation constructor" << std::endl;
+    
 }
 
 double Activation::pass(double x) {

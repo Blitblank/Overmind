@@ -7,8 +7,8 @@
 Layer::Layer(int _inputs, int _neurons, Activation* _activation) : n_inputs(_inputs), n_neurons(_neurons), activation(_activation) {
 
     // initialize size of vectors
-    weights = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons, 0.1)); // this is ugly
-    biases = std::vector<double>(n_neurons, 0.0);
+    weights = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons, 0.1057)); // this is ugly
+    biases = std::vector<double>(n_neurons, 0.183);
 
 }
 
