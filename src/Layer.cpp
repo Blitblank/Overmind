@@ -7,7 +7,7 @@
 
 Layer::Layer(int _inputs, int _neurons, Activation* _activation) : n_inputs(_inputs), n_neurons(_neurons), activation(_activation) {
 
-    std::default_random_engine generator(10); // keep seed constant if you want to test things
+    std::default_random_engine generator(12); // keep seed constant if you want to test things
     std::uniform_real_distribution<double> distribution(-1.0, 1.0);
 
     // initialize vectors
@@ -30,19 +30,46 @@ std::vector<double> Layer::forward(std::vector<double> inputs) {
         throw std::invalid_argument("input vector invalid size");
     }
 
-    std::vector<double> output = std::vector<double>(n_neurons);
+    currentInput = inputs;
+    currentZ = std::vector<double>(n_neurons);
+    currentOutput = std::vector<double>(n_neurons);
 
     // dot product each row of weights with the inputs and add biases
     for (int i = 0; i < n_neurons; i++) {
-        output[i] = biases[i];
+        currentZ[i] = biases[i];
         for (int j = 0; j < n_inputs; j++) {
-            output[i] += inputs[j] * weights[j][i];
+            currentZ[i] += inputs[j] * weights[j][i];
         }
         // run through activation function
-        output[i] = activation->pass(output[i]);
+        currentOutput[i] = activation->pass(currentZ[i]);
     }
 
-    return output;
+    return currentOutput;
+}
+
+std::vector<double> Layer::backward(std::vector<double> dOutputs, double learningRate) {
+
+    std::vector<double> dZ(n_neurons);
+    for(int i = 0; i < n_neurons; i++) {
+        dZ[i] = dOutputs[i] * activation->derivative(currentZ[i]);
+    }
+    return updateLayer(dZ, learningRate);
+}
+
+std::vector<double> Layer::updateLayer(std::vector<double> dZ, double learningRate) {
+
+    std::vector<double> dCurrent(n_inputs, 0.0);
+
+    for(int i = 0; i < n_neurons; i++) {
+        for(int j = 0; j < n_inputs; j++) {
+            double dWeight = currentInput[j] * dZ[i]; // chain rule garbage
+            weights[j][i] += (-1.0)*learningRate * dWeight;
+            dCurrent[j] += weights[j][i] * dZ[i];
+        }
+        biases[i] += (-1.0)*learningRate * dZ[i];
+    }
+
+    return dCurrent;
 }
 
 void Layer::print() {

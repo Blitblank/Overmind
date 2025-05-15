@@ -14,27 +14,36 @@ void App::init() {
 
 void App::run() {
     
-    int n_inputs = 2;
-    int n_outputs = 2;
+    // construct model
+    int n_inputs = 1;
+    int n_outputs = 1;
     int hiddenNeurons_1 = 100;
     int hiddenNeurons_2 = 100;
     Network network(n_inputs, n_outputs);
     
-    Activation* activation = new Sigmoid();
-    Layer inputLayer(n_inputs, hiddenNeurons_1, activation);
-    Layer hiddenLayer(hiddenNeurons_1, hiddenNeurons_2, activation); //
-    Layer outputLayer(hiddenNeurons_2, n_outputs, activation);
+    Loss* loss = new MeanSquaredError();
+    Layer inputLayer(n_inputs, hiddenNeurons_1, new ReLu());
+    Layer hiddenLayer(hiddenNeurons_1, hiddenNeurons_2, new ReLu());
+    Layer outputLayer(hiddenNeurons_2, n_outputs, new Activation());
 
     network.addLayer(&inputLayer);
     network.addLayer(&hiddenLayer);
     network.addLayer(&outputLayer);
-    //inputLayer.print();
-    //hiddenLayer.print();
-    //outputLayer.print();
+    network.setLoss(loss);
+    std::cout << "Network Created." << std::endl;
 
+    // create dataset
+    Dataset dataset;
+    dataset.generateSin(10000);
+    network.setDataset(&dataset);
+    std::cout << "Dataset Created." << std::endl;
+    // train model
+    network.train(10, 0.00001);
+
+    // demonstrate model
     std::vector<double> inputs;
     for(int i = 0; i < n_inputs; i++) {
-        inputs.push_back(0.2);
+        inputs.push_back(0.394);
     }
     std::vector<double> outputs = network.forwardPass(inputs);
 

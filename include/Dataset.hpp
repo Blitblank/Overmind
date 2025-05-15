@@ -10,17 +10,12 @@ class Dataset {
 
     Dataset();
     ~Dataset() = default;
-
-    struct Point {
-        double x;
-        double y;
-    };
     
-
     void generateSin(int n);
 
-    private:
+    std::vector<std::vector<double>> X;
+    std::vector<std::vector<double>> Y;
 
-    std::vector<Point> data;
+    private:
 
 };

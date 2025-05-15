@@ -9,6 +9,7 @@ class Activation {
     ~Activation() = default;
 
     virtual double pass(double x); // default activation returns f(x) = x
+    virtual double derivative(double x);
 
     private:
 
@@ -17,6 +18,7 @@ class Activation {
 class ReLu : public Activation {
     public:
     double pass(double x) override;
+    double derivative(double x) override;
 
     private:
 };
@@ -24,6 +26,7 @@ class ReLu : public Activation {
 class Sigmoid : public Activation {
     public:
     double pass(double x) override;
+    double derivative(double x) override;
 
     private:
 };

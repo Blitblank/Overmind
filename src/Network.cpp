@@ -7,7 +7,18 @@ Network::Network(int _inputs, int _outputs) : n_inputs(_inputs), n_outputs(_outp
 
 }
 
-void Network::train() {
+void Network::train(double epochs, double learningRate) {
+
+    for(int epoch = 0; epoch < epochs; epoch++) {
+        double aggregateLoss = 0.0;
+        int X_size = dataset->X.size();
+        for(int i = 0; i < X_size; i++) {
+            std::vector<double> output = forwardPass(dataset->X[i]);
+            aggregateLoss += loss->calculate(output, dataset->Y[i]);
+            backwardPass(output, dataset->Y[i], learningRate);
+        }
+        std::cout << "Current Epoch: " << epoch << "  Loss: " << (aggregateLoss/X_size) << std::endl;
+    }
 
 }
 
@@ -15,11 +26,15 @@ std::vector<double> Network::forwardPass(std::vector<double> inputs) {
     std::vector<double> current = inputs;
     for(int i = 0; i < n_layers; i++) {
         current = layers[i]->forward(current);
-        for(int j = 0; j < current.size(); j++) {
-            std::cout << "current: (" << j << ") = " << current[j] << std::endl;
-        }
     }
     return current;
+}
+
+void Network::backwardPass(std::vector<double> yPredicted, std::vector<double> yTrue, double learningRate) {
+    std::vector<double> gradient = loss->gradient(yPredicted, yTrue);
+    for(int i = n_layers-1; i >= 0; i--) {
+        gradient = layers[i]->backward(gradient, learningRate);
+    }
 }
 
 void Network::addLayer(Layer* layer) {
