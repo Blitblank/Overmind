@@ -17,7 +17,8 @@ void Network::train(double epochs, double learningRate) {
             aggregateLoss += loss->calculate(output, dataset->Y[i]);
             backwardPass(output, dataset->Y[i], learningRate);
         }
-        std::cout << "Current Epoch: " << epoch << "  Loss: " << (aggregateLoss/X_size) << std::endl;
+        std::cout << "Current Epoch: " << epoch+1 << "  Mean Loss: " << (aggregateLoss/X_size) << std::endl;
+        // TODO: live update progress bar
     }
 
 }

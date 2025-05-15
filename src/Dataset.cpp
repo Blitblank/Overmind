@@ -15,7 +15,7 @@ void Dataset::generateSin(int n) {
 
     for(int i = 0; i < n; i++) {
         std::vector<double> x = { distribution(generator) }; // random x
-        std::vector<double> y = { sin(x[0]) }; // sin(x)
+        std::vector<double> y = { sin(x[0]), cos(x[0]) };
 
         X.push_back(x);
         Y.push_back(y);

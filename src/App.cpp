@@ -16,9 +16,9 @@ void App::run() {
     
     // construct model
     int n_inputs = 1;
-    int n_outputs = 1;
-    int hiddenNeurons_1 = 100;
-    int hiddenNeurons_2 = 100;
+    int n_outputs = 2;
+    int hiddenNeurons_1 = 10;
+    int hiddenNeurons_2 = 10;
     Network network(n_inputs, n_outputs);
     
     Loss* loss = new MeanSquaredError();
@@ -34,11 +34,11 @@ void App::run() {
 
     // create dataset
     Dataset dataset;
-    dataset.generateSin(10000);
+    dataset.generateSin(1000000);
     network.setDataset(&dataset);
     std::cout << "Dataset Created." << std::endl;
     // train model
-    network.train(10, 0.00001);
+    network.train(20, 0.0001);
 
     // demonstrate model
     std::vector<double> inputs;
