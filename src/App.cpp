@@ -17,8 +17,8 @@ void App::run() {
     // construct model
     int n_inputs = 1;
     int n_outputs = 2;
-    int hiddenNeurons_1 = 20;
-    int hiddenNeurons_2 = 20;
+    int hiddenNeurons_1 = 40;
+    int hiddenNeurons_2 = 40;
     Network network(n_inputs, n_outputs);
     
     Loss* loss = new MeanSquaredError();

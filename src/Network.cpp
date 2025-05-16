@@ -2,6 +2,7 @@
 #include "Network.hpp"
 
 #include <iostream>
+#include <iomanip>
 
 Network::Network(int _inputs, int _outputs) : n_inputs(_inputs), n_outputs(_outputs) {
 
@@ -11,15 +12,25 @@ void Network::train(int epochs, double learningRate) {
 
     std::cout << "Beginning Training Set of " << epochs << " epochs with learningRate = " << learningRate << "..." << std::endl;
     for(int epoch = 0; epoch < epochs; epoch++) {
+
+        std::cout << "Current Epoch: " << std::left << std::setw(5) << epoch+1;
+
         double aggregateLoss = 0.0;
         int X_size = dataset->X.size();
+
         for(int i = 0; i < X_size; i++) {
             std::vector<double> output = forwardPass(dataset->X[i]);
-            aggregateLoss += loss->calculate(output, dataset->Y[i]);
+
+            double dLoss = loss->calculate(output, dataset->Y[i]);
+            if(dLoss != dLoss) throw std::invalid_argument("Loss NaN");
+            aggregateLoss += dLoss;
+
             backwardPass(output, dataset->Y[i], learningRate);
+
+            if(i % (X_size/100) == 0) std::cout << "=";
         }
-        std::cout << "Current Epoch: " << epoch+1 << "  Mean Loss: " << (aggregateLoss/X_size) << std::endl;
-        // TODO: live update progress bar
+
+        std:: cout << "||  Mean Loss: " << (aggregateLoss/X_size) << std::endl;
     }
 
 }

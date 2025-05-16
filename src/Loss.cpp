@@ -54,7 +54,8 @@ double MeanSquaredError::calculate(std::vector<double> yPredicted, std::vector<d
         sum += diff * diff;
     }
 
-    return sum / yPredicted.size();
+    double meanLoss = sum / yPredicted.size();
+    return meanLoss;
 }
 
 std::vector<double> MeanSquaredError::gradient(std::vector<double> yPredicted, std::vector<double> yTrue) {
