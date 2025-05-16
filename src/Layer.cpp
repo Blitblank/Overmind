@@ -7,8 +7,8 @@
 
 Layer::Layer(int _inputs, int _neurons, Activation* _activation) : n_inputs(_inputs), n_neurons(_neurons), activation(_activation) {
 
-    std::default_random_engine generator(12); // keep seed constant if you want to test things
-    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+    std::default_random_engine generator(13); // keep seed constant if you want to test things
+    std::uniform_real_distribution<double> distribution(-0.1, 0.1);
 
     // initialize vectors
     weights = std::vector<std::vector<double>>(n_inputs, std::vector<double>(n_neurons)); // this is ugly

@@ -14,11 +14,11 @@ class Network {
     Network(int _inputs, int _outputs);
     ~Network() = default;
 
-    void train(double epochs, double learningRate);
+    void train(int epochs, double learningRate);
     std::vector<double> forwardPass(std::vector<double> inputs);
     void backwardPass(std::vector<double> yPredicted, std::vector<double> yTrue, double learningRate);
     void addLayer(Layer* layer);
-    void setDataset(Dataset* _dataset) { dataset = _dataset; }
+    void setDataset(Dataset* _dataset);
     void setLoss(Loss* _loss) { loss = _loss; }
 
     private:

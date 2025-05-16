@@ -7,8 +7,9 @@ Network::Network(int _inputs, int _outputs) : n_inputs(_inputs), n_outputs(_outp
 
 }
 
-void Network::train(double epochs, double learningRate) {
+void Network::train(int epochs, double learningRate) {
 
+    std::cout << "Beginning Training Set of " << epochs << " epochs with learningRate = " << learningRate << "..." << std::endl;
     for(int epoch = 0; epoch < epochs; epoch++) {
         double aggregateLoss = 0.0;
         int X_size = dataset->X.size();
@@ -41,4 +42,8 @@ void Network::backwardPass(std::vector<double> yPredicted, std::vector<double> y
 void Network::addLayer(Layer* layer) {
     layers.push_back(layer);
     n_layers++;
+}
+
+void Network::setDataset(Dataset* _dataset) {
+    dataset = _dataset;
 }

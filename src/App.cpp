@@ -17,8 +17,8 @@ void App::run() {
     // construct model
     int n_inputs = 1;
     int n_outputs = 2;
-    int hiddenNeurons_1 = 10;
-    int hiddenNeurons_2 = 10;
+    int hiddenNeurons_1 = 20;
+    int hiddenNeurons_2 = 20;
     Network network(n_inputs, n_outputs);
     
     Loss* loss = new MeanSquaredError();
@@ -34,17 +34,19 @@ void App::run() {
 
     // create dataset
     Dataset dataset;
-    dataset.generateSin(1000000);
+    //dataset.generateSin(100);
+    //dataset.generateDataset("../datasets/sin_cos_005.csv", 1000000);
+    dataset.loadDataset("../datasets/sin_cos_005.csv");
     network.setDataset(&dataset);
-    std::cout << "Dataset Created." << std::endl;
+
     // train model
-    network.train(20, 0.0001);
+    // i do different sets here with different leanring rates but eventually i might have an algo that has adaptive leanring rate
+    network.train(20, 0.01);
+    //network.train(5, 0.006);
+    //network.train(5, 0.004);
 
     // demonstrate model
-    std::vector<double> inputs;
-    for(int i = 0; i < n_inputs; i++) {
-        inputs.push_back(0.394);
-    }
+    std::vector<double> inputs = { 0.1422 };
     std::vector<double> outputs = network.forwardPass(inputs);
 
     std::cout << "\nNetwork Input: " << std::endl;
