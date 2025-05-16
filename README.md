@@ -4,9 +4,7 @@ its probably bad
 edit: it is bad but it works
 
 TODO:
-    -- add saving and loading datasets from files (prob csv)
     -- add saving and loading models from files (prob not csv)
-    -- epoch live progress bar
     -- training algorithm optimization
     -- e.g. dynamic learning rate with momentum
     -- validation loss & accuracy
