@@ -12,6 +12,7 @@ class Network {
     public:
 
     Network(int _inputs, int _outputs);
+    Network(std::string filename);
     ~Network() = default;
 
     void train(int epochs, double learningRate);
@@ -20,6 +21,9 @@ class Network {
     void addLayer(Layer* layer);
     void setDataset(Dataset* _dataset);
     void setLoss(Loss* _loss) { loss = _loss; }
+
+    void save(std::string filename);
+    void load(std::string filename);
 
     private:
 
@@ -30,5 +34,9 @@ class Network {
     int n_inputs = 0;
     int n_outputs = 0;
     int n_layers = 0;
+    double currentLoss = 1.0;
+    long long trainingIterations = 0;
+
+    const std::string dir = "../models/";
 
 };

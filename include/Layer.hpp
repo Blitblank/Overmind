@@ -4,17 +4,21 @@
 #include "Activation.hpp"
 
 #include<vector>
+#include<fstream>
 
 class Layer {
 
     public:
 
     Layer(int _inputs, int _neurons, Activation* _activation);
+    Layer(std::fstream* file);
     ~Layer() = default;
 
     std::vector<double> forward(std::vector<double> inputs); // pass inputs through. size of inpout/ouput vectors match the size of the layer
     std::vector<double> backward(std::vector<double> inputs, double learningRate); // backpropagation
     void print(); // display weights and biases of the layer
+    void save(std::fstream* file, int index);
+    int load(std::fstream* file);
 
     private:
 

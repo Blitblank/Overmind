@@ -21,4 +21,6 @@ class Dataset {
 
     private:
 
+    const std::string dir = "../datasets/";
+
 };

@@ -18,3 +18,4 @@ Long term goals:
     -- support for multiple optimizers
     -- ik its bad but natural selection & evolution as an optimizer is fun
     -- man i want an ai to play like snake or something
+    -- ui with sdl3

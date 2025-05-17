@@ -36,7 +36,8 @@ void Dataset::generateDataset(std::string filename, int n) {
 
     // create file
     std::fstream file;
-    file.open(filename.c_str(), std::ios::out | std::ios::app);
+    const char* path = (dir + filename).c_str();
+    file.open(path, std::ios::out | std::ios::app);
     // header info: [x length, y length, n_lines]
     file << xSize << "," << ySize << "," << n << std::endl;
 
@@ -63,9 +64,10 @@ void Dataset::loadDataset(std::string filename) {
 
     // read file
     std::fstream file;
-    file.open(filename.c_str(), std::ios::in);
+    std::string path = dir + filename;
+    file.open(path.c_str(), std::ios::in);
     if (!file.is_open()) {
-        std::cout << "Failed to open file: " << filename << std::endl;
+        std::cout << "Failed to open file: " << path << std::endl;
     }
     
     std::string line;
@@ -74,13 +76,14 @@ void Dataset::loadDataset(std::string filename) {
     int ySize = 0;
     int numEntries = 0;
     while (std::getline(file, line)) {
+
         std::vector<std::string> row;
         std::stringstream ss(line);
         std::string cell;
-
         while (std::getline(ss, cell, ',')) {
             row.push_back(cell);
         }
+
         if(index == 0) {
             xSize = std::stoi(row[0]);
             ySize = std::stoi(row[1]);

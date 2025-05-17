@@ -64,11 +64,24 @@ std::vector<double> MeanSquaredError::gradient(std::vector<double> yPredicted, s
     if (size != yTrue.size()) {
         throw std::invalid_argument("vector size mismatch");
     }
-
     std::vector<double> gradient(size);
     for (int i = 0; i < size; i++) {
         gradient[i] = 2.0 * (yPredicted[i] - yTrue[i]) / size;
     }
 
     return gradient;
+}
+
+Loss* Loss::fromID(int id) {
+    switch (id) {
+    case 0:
+        return new Loss();
+        break;
+    case 1:
+        return new MeanSquaredError();
+        break;
+    default:
+        return new Loss();
+        break;
+    }
 }
