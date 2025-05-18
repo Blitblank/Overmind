@@ -36,8 +36,11 @@ void Dataset::generateDataset(std::string filename, int n) {
 
     // create file
     std::fstream file;
-    const char* path = (dir + filename).c_str();
-    file.open(path, std::ios::out | std::ios::app);
+    std::string path = dir + filename;
+
+    std::cout << "Creating Dataset at " << path << ". Entries: " << n << ". (X length, Y length)=(" << xSize << ", " << ySize << ")...";
+
+    file.open(path.c_str(), std::ios::out | std::ios::app);
     // header info: [x length, y length, n_lines]
     file << xSize << "," << ySize << "," << n << std::endl;
 
@@ -56,8 +59,7 @@ void Dataset::generateDataset(std::string filename, int n) {
         file << std::endl;
     }
     file.close();
-    std::cout << "Dataset created." << std::endl;
-    std::cout << "Created Dataset: " << filename << ". Entries: " << n << ". (X length, Y length)=(" << xSize << ", " << ySize << ")" << std::endl; 
+    std::cout << " Success." << std::endl;
 }
 
 void Dataset::loadDataset(std::string filename) {
@@ -69,6 +71,8 @@ void Dataset::loadDataset(std::string filename) {
     if (!file.is_open()) {
         std::cout << "Failed to open file: " << path << std::endl;
     }
+
+    std::cout << "Loading Dataset from " << path << "..."; 
     
     std::string line;
     int index = 0;
@@ -105,7 +109,7 @@ void Dataset::loadDataset(std::string filename) {
 
     file.close();
 
-    std::cout << "Loaded Dataset: " << filename << ". Entries Parsed: " << index-1 << ". (X length, Y length)=(" << xSize << ", " << ySize << ")" << std::endl; 
+    std::cout << " Success. Entries Parsed: " << index-1 << ". (X length, Y length)=(" << xSize << ", " << ySize << ")" << std::endl; 
 
 }
 

@@ -5,6 +5,7 @@
 #include <iomanip>
 #include <fstream>
 #include <sstream>
+#include <random>
 
 Network::Network(int _inputs, int _outputs) : n_inputs(_inputs), n_outputs(_outputs) {
 
@@ -93,7 +94,7 @@ void Network::load(std::string filename) {
     std::string path = dir + filename;
     std::fstream file;
     file.open(path.c_str(), std::ios::in);
-    std::cout << "Loading Network from " << path << std::endl;
+    std::cout << "Loading Network from " << path << "..."; 
 
     std::string line;
     std::getline(file, line);
@@ -118,6 +119,33 @@ void Network::load(std::string filename) {
         addLayer(layer);
         n_layers--; // because add layer adds 1 to n_layers so that its updated when done manually
     }
-    //std::cout << "loading success" << std::endl;
+    std::cout << " Success." << std::endl;
+}
 
+void Network::demonstrate(int n) {
+
+    std::default_random_engine generator(18);
+    std::uniform_real_distribution<double> distribution(-1.0, 1.0);
+
+    std::cout << "\nNetwork Demo >> x" << n << std::endl;
+
+    for(int i = 0; i < n; i++) {
+
+        std::vector<double> inputs = { distribution(generator) };
+        std::vector<double> outputs = forwardPass(inputs);
+
+        std::cout << "Inputs: (";
+        for(int i = 0; i < inputs.size(); i++) {
+            std::cout << std::setw(12) << inputs[i];
+            if(i != inputs.size() - 1) std::cout << ", "; 
+        }
+        std::cout << ")  Network Outputs: (";
+        for(int i = 0; i < outputs.size(); i++) {
+            std::cout << std::setw(12) << outputs[i];
+            if(i != outputs.size() - 1) std::cout << ", "; 
+        }
+        std::cout << ")    Expected Outputs: (";
+        std::cout << std::setw(12) << std::sin(inputs[0]) << ", ";
+        std::cout << std::setw(12) << std::cos(inputs[0]) << ") " << std::endl;
+    }
 }

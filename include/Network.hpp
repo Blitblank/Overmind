@@ -24,6 +24,7 @@ class Network {
 
     void save(std::string filename);
     void load(std::string filename);
+    void demonstrate(int n);
 
     private:
 

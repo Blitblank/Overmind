@@ -14,6 +14,7 @@ void App::init() {
 
 void App::run() {
     
+    /*
     // construct model
     int n_inputs = 1;
     int n_outputs = 2;
@@ -32,6 +33,7 @@ void App::run() {
     network.addLayer(&outputLayer);
     network.setLoss(loss);
     std::cout << "Network Created." << std::endl;
+    */
 
     // create dataset
     Dataset dataset;
@@ -43,23 +45,10 @@ void App::run() {
     // load a model and train it
     Network loadedNetwork("updated_model_001.csv"); // load a model from a csv file
     loadedNetwork.setDataset(&dataset); // attatch a dataset to the model for training
-    loadedNetwork.train(10, 0.01); // train for n epochs with a certain leanring rate 
+    loadedNetwork.train(20, 0.0001); // train for n epochs with a certain leanring rate 
     loadedNetwork.save("updated_model_001.csv"); // save the new model. using the same file will overwrite it
 
     // demonstrate model
-    std::vector<double> inputs = { 0.1422 };
-    std::vector<double> outputs = loadedNetwork.forwardPass(inputs);
-
-    std::cout << "\nNetwork Input: " << std::endl;
-    for(int i = 0; i < inputs.size(); i++) {
-        std::cout << inputs[i];
-        if(i != inputs.size() - 1) std::cout << ", "; 
-    }
-    std::cout << "\nNetwork Output: " << std::endl;
-    for(int i = 0; i < outputs.size(); i++) {
-        std::cout << outputs[i];
-        if(i != outputs.size() - 1) std::cout << ", "; 
-    }
-    std::cout << std::endl;
+    loadedNetwork.demonstrate(10);
     
 }
